@@ -36,4 +36,4 @@ Content and quantitative results are based on the supplied SAGE preprint source.
 - Verify BibTeX copying and keyboard access; the page remains readable without JavaScript.
 - Keep venue, citation metadata, and paper content consistent when updating the preprint.
 
-Design reference: [SDPose](https://t-s-liang.github.io/SDPose/) and [Academic Project Page](https://github.com/eliahuhorwitz/Academic-project-page-template). Page code is covered by the repository's MIT license; research figures and paper retain their original attribution.
+Page code is covered by the repository's MIT license; research figures and paper retain their original attribution.
