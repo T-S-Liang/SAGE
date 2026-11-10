@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAGE: Salient Factor Discovery and Generation with Visual Foundation Representations</title>
+  <meta name="description" content="SAGE discovers target-specific visual factors and uses them to guide generation, without subtype labels. Preprint 2026.">
+  <meta name="author" content="Shuang Liang, Lejun Liao, Shiyuan Zhang, Max C. Zhang, Xiaolong Luo, Han Wang, Stefano Anzellotti, Yuan Yuan">
+  <meta name="theme-color" content="#003d33">
+  <meta name="citation_title" content="SAGE: Salient Factor Discovery and Generation with Visual Foundation Representations">
+  <meta name="citation_publication_date" content="2026/09/30">
+  <meta name="citation_arxiv_id" content="2609.39635">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2609.39635">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SAGE: Salient Factor Discovery and Generation">
+  <meta property="og:description" content="Discover, disentangle, and generate with visual foundation representations. Preprint 2026.">
+  <link rel="icon" href="static/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="static/css/style.css">
+  <script src="static/js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="hero" id="top">
+    <div class="container hero-inner">
+      <div class="project-logo">
+        <img src="static/images/sage-logo.webp" alt="SAGE sage plant logo from Figure 1" width="512" height="587" fetchpriority="high">
+        <span aria-hidden="true">SAGE</span>
+      </div>
+      <p class="eyebrow">Discover · Disentangle · Generate</p>
+      <h1>SAGE: Salient Factor Discovery and Generation with Visual Foundation Representations</h1>
+      <p class="publication-venue">Preprint 2026</p>
+      <div class="authors" aria-label="Authors">
+        <span>Shuang Liang<sup>1,2,†</sup>,</span>
+        <span>Lejun Liao<sup>2,†</sup>,</span>
+        <span>Shiyuan Zhang<sup>2,3,†</sup>,</span>
+        <span>Max C. Zhang<sup>2</sup>,</span>
+        <span>Xiaolong Luo<sup>4</sup>,</span>
+        <span>Han Wang<sup>1</sup>,</span>
+        <span>Stefano Anzellotti<sup>2</sup>,</span>
+        <span>Yuan Yuan<sup>2,*</sup></span>
+      </div>
+      <div class="affiliations">
+        <span><sup>1</sup>The University of Hong Kong</span>
+        <span><sup>2</sup>Boston College</span>
+        <span><sup>3</sup>University of Virginia</span>
+        <span><sup>4</sup>Harvard University</span>
+      </div>
+      <p class="author-notes"><sup>†</sup>Equal contribution. <sup>*</sup>Corresponding author.</p>
+      <div class="publication-links">
+        <a class="button" href="https://arxiv.org/abs/2609.39635" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 3 14 18M5 21l6-8m2-2 6-8"/></svg>
+          arXiv
+        </a>
+        <a class="button" href="https://arxiv.org/pdf/2609.39635" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h6"/></svg>
+          Paper <span class="button-detail">PDF</span>
+        </a>
+        <a class="button" href="https://github.com/T-S-Liang/SAGE" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></svg>
+          Code
+        </a>
+        <a class="button button-outline" href="#bibtex">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H6a2 2 0 0 0-2 2v4l-2 2 2 2v4a2 2 0 0 0 2 2h3m6-16h3a2 2 0 0 1 2 2v4l2 2-2 2v4a2 2 0 0 1-2 2h-3"/></svg>
+          BibTeX
+        </a>
+      </div>
+      <nav class="section-nav" aria-label="Page sections">
+        <a href="#abstract">Abstract</a><span aria-hidden="true">/</span>
+        <a href="#method">Method</a><span aria-hidden="true">/</span>
+        <a href="#results">Results</a><span aria-hidden="true">/</span>
+        <a href="#generation">Generation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="teaser section" aria-label="SAGE overview">
+      <div class="container">
+        <figure>
+          <a class="figure-link" href="static/images/teaser.webp" target="_blank" rel="noopener noreferrer" aria-label="Open SAGE overview figure at full resolution">
+            <img src="static/images/teaser.webp" alt="SAGE overview: separating common and salient factors enables high-fidelity reconstruction, subtype discovery, and reference-conditioned generation." fetchpriority="high" width="2400" height="541">
+          </a>
+          <figcaption><strong>Discover what makes the target different.</strong> SAGE learns common content and target-specific salient factors from background and target datasets. The same representation supports reconstruction, subtype discovery, and generation guided by a reference image.</figcaption>
+        </figure>
+        <p class="takeaway">From a visual difference to a discoverable, generative factor.<br><span>No subtype labels. No text description required.</span></p>
+      </div>
+    </section>
+
+    <section class="section section-cream" id="abstract">
+      <div class="container prose">
+        <h2>Abstract</h2>
+        <p>Given a target dataset, such as faces with eyeglasses, and a background dataset, such as faces without, contrastive analysis separates <em>salient</em> factors specific to the target from <em>common</em> content shared by both. We aim for salient representations that capture target-specific detail in each image, such as the shape, color, and position of the glasses, so that they reveal subtypes without subtype labels and guide the generation of new examples of a discovered subtype, even one with no name or text description.</p>
+        <p>We introduce <strong>SAGE</strong>, which learns both factors directly in the high-dimensional spatial latent of a frozen representation autoencoder and conditions a diffusion transformer on the learned salient representation of a reference image. On Digits-ImageNet and FFHQ eyeglasses, SAGE combines high-fidelity <em>reconstruction</em> (rFID below 2) with unsupervised <em>subtype discovery</em>, recovering the digits better than baselines (probe accuracy 0.950 vs. at most 0.281) and revealing eyewear types, finer sunglasses styles, and mislabeled images; salient-conditioned <em>generation</em> raises Digits-ImageNet subtype accuracy over the unfactorized latent (90.5% vs. 27.7%) and diversity on both datasets. On retinal OCT, SAGE's salient space separates three diseases using only normal/disease labels.</p>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="container">
+        <p class="section-kicker">The approach</p>
+        <h2>One representation, two stages</h2>
+        <p class="section-intro">Learn the difference between two datasets, then use that difference to generate new examples.</p>
+        <article class="method-stage">
+          <h3><span class="stage-number">01</span>Discover common and salient factors</h3>
+          <p>A frozen representation autoencoder provides a rich spatial latent. SAGE learns separate common and salient encoders in this space: common factors capture shared content, while salient factors capture what is specific to the target dataset. Reconstruction, adversarial swapping, sparsity, and cycle consistency encourage the two factors to stay informative and distinct.</p>
+          <figure>
+            <a class="figure-link" href="static/images/stage-one.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Stage 1 method figure at full resolution"><img src="static/images/stage-one.webp" alt="Stage 1 architecture with frozen representation autoencoder, common and salient encoders, factor swapping, reconstruction, and training losses." loading="lazy" decoding="async" width="2400" height="1504"></a>
+            <figcaption><strong>Stage 1: factor discovery.</strong> SAGE learns directly in the high-dimensional spatial representation, preserving the visual detail needed for both reconstruction and subtype discovery.</figcaption>
+          </figure>
+        </article>
+        <article class="method-stage">
+          <h3><span class="stage-number">02</span>Generate from a reference's salient factor</h3>
+          <p>The learned salient representation of a reference image is globally max-pooled and used to condition a diffusion transformer. This guides generation toward the reference's digit or eyewear subtype while allowing the surrounding scene or face to vary.</p>
+          <figure>
+            <a class="figure-link" href="static/images/stage-two.webp" target="_blank" rel="noopener noreferrer" aria-label="Open Stage 2 method figure at full resolution"><img src="static/images/stage-two.webp" alt="Stage 2 uses the pooled salient representation from a reference image to condition a diffusion transformer and generate diverse images of the same subtype." loading="lazy" decoding="async" width="2400" height="1506"></a>
+            <figcaption><strong>Stage 2: salient-conditioned generation.</strong> A visual reference provides the condition, including for subtypes that have no name or text description.</figcaption>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-mist" id="results">
+      <div class="container">
+        <p class="section-kicker">Experiments</p>
+        <h2>Reconstruct faithfully. Discover fine-grained subtypes.</h2>
+        <p class="section-intro">Evaluated on Digits-ImageNet, FFHQ eyeglasses, and retinal OCT.</p>
+        <h3>High-fidelity reconstruction and factor separation</h3>
+        <figure>
+          <a class="figure-link" href="static/images/reconstruction.webp" target="_blank" rel="noopener noreferrer" aria-label="Open reconstruction comparison at full resolution"><img src="static/images/reconstruction.webp" alt="Reconstruction comparison of cVAE, SepVAE, Double-InfoGAN, and SAGE, showing full, common-only, and salient-only reconstructions for digits and eyeglasses." loading="lazy" decoding="async" width="2400" height="1240"></a>
+          <figcaption><strong>Decoding the two factors.</strong> Full reconstructions preserve image detail; common-only and salient-only reconstructions reveal the separation between shared content and target-specific attributes.</figcaption>
+        </figure>
+        <div class="table-scroll" role="region" aria-label="Reconstruction and subtype discovery benchmark, scroll horizontally on smaller screens" tabindex="0">
+          <table>
+            <caption>Reconstruction and subtype discovery</caption>
+            <thead><tr><th scope="col" rowspan="2">Method</th><th scope="colgroup" colspan="3">Digits-ImageNet</th><th scope="colgroup" colspan="3">FFHQ</th></tr><tr><th scope="col">rFID ↓</th><th scope="col">Probe acc. ↑</th><th scope="col">ARI / NMI ↑</th><th scope="col">rFID ↓</th><th scope="col">Probe acc. ↑</th><th scope="col">ARI / NMI ↑</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">cVAE</th><td>151.0</td><td>0.135</td><td>0.001 / 0.003</td><td>188.2</td><td>0.898</td><td>0.001 / 0.001</td></tr>
+              <tr><th scope="row">SepVAE</th><td>162.5</td><td>0.145</td><td>0.009 / 0.019</td><td>197.4</td><td>0.897</td><td>−0.001 / 0.000</td></tr>
+              <tr><th scope="row">Double-InfoGAN</th><td>171.4</td><td>0.281</td><td>0.001 / 0.003</td><td>122.5</td><td>0.964</td><td>0.298 / 0.299</td></tr>
+              <tr><th scope="row">SepCLR</th><td>N/A</td><td>0.180</td><td>0.000 / 0.001</td><td>N/A</td><td>0.970</td><td>0.822 / 0.696</td></tr>
+              <tr><th scope="row">DINOv3 + SepCLR</th><td>N/A</td><td>0.148</td><td>0.000 / 0.001</td><td>N/A</td><td>0.976</td><td>0.915 / 0.825</td></tr>
+              <tr class="ours"><th scope="row">SAGE (Ours)</th><td>1.78</td><td>0.950</td><td>0.337 / 0.472</td><td>1.65</td><td>0.983</td><td>0.939 / 0.865</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">Lower rFID indicates better reconstruction. Probe accuracy, ARI, and NMI evaluate subtype information in the salient representation. FFHQ labels are audit-corrected. Double-InfoGAN uses 128 × 128 images; other methods use 256 × 256. N/A indicates no decoder. See the paper for the complete evaluation protocol.</p>
+        <h3>Subtype discovery without subtype supervision</h3>
+        <p>SAGE recovers digit identity and eyewear subtypes using only background/target dataset membership during training. The salient space also reveals finer sunglasses styles and a cluster of mislabeled FFHQ images.</p>
+        <figure>
+          <a class="figure-link" href="static/images/subtype-discovery.webp" target="_blank" rel="noopener noreferrer" aria-label="Open subtype discovery figure at full resolution"><img src="static/images/subtype-discovery.webp" alt="t-SNE atlas of SAGE salient representations showing digit clusters, eyewear subtypes, finer sunglasses styles, and mislabeled images." loading="lazy" decoding="async" width="2400" height="1094"></a>
+          <figcaption><strong>A closer look at the salient space.</strong> Visual subtypes emerge without subtype labels. The paper reports clustering metrics on the original representations, separately from these t-SNE visualizations.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="editing">
+      <div class="container">
+        <p class="section-kicker">Exploring the factors</p>
+        <h2>Transfer, remove, and interpolate</h2>
+        <p class="section-intro">Manipulate salient attributes while retaining the common content of an image.</p>
+        <h3>Attribute transfer and removal</h3>
+        <figure>
+          <a class="figure-link" href="static/images/attribute-transfer.webp" target="_blank" rel="noopener noreferrer" aria-label="Open attribute transfer figure at full resolution"><img src="static/images/attribute-transfer.webp" alt="Transferring digits and eyeglasses between images by swapping salient factors, and removing them by setting the salient factor to zero." loading="lazy" decoding="async" width="2400" height="1009"></a>
+          <figcaption>Combine one image's common representation with another's salient representation to transfer an attribute. Setting the salient factor to zero removes the target-specific attribute.</figcaption>
+        </figure>
+        <h3>Continuous interpolation</h3>
+        <figure>
+          <a class="figure-link" href="static/images/interpolation.webp" target="_blank" rel="noopener noreferrer" aria-label="Open salient interpolation figure at full resolution"><img src="static/images/interpolation.webp" alt="Salient interpolation changes a digit from 1 to 7 and regular eyeglasses into sunglasses while keeping the common representation fixed." loading="lazy" decoding="async" width="2400" height="1174"></a>
+          <figcaption>Fix the common representation and interpolate between two salient representations to move between digit identities or eyewear styles.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section-cream" id="generation">
+      <div class="container">
+        <p class="section-kicker">From discovery to generation</p>
+        <h2>Same salient subtype. New visual content.</h2>
+        <p class="section-intro">Conditioning on the separated salient factor encourages diverse samples that share the reference's target attribute.</p>
+        <figure>
+          <a class="figure-link" href="static/images/generation.webp" target="_blank" rel="noopener noreferrer" aria-label="Open generation comparison at full resolution"><img src="static/images/generation.webp" alt="Generated images conditioned on raw DINOv3 features versus SAGE salient factors, with diverse faces and scenes sharing the reference eyewear or digit subtype." loading="lazy" decoding="async" width="2400" height="844"></a>
+          <figcaption><strong>Salient-conditioned generation.</strong> Compared with conditioning on the unfactorized DINOv3 latent, SAGE increases diversity on both datasets and improves digit subtype accuracy.</figcaption>
+        </figure>
+        <div class="table-scroll" role="region" aria-label="Generation results, scroll horizontally on smaller screens" tabindex="0">
+          <table>
+            <caption>Generation quality and diversity</caption>
+            <thead><tr><th scope="col">Dataset</th><th scope="col">Conditioning</th><th scope="col">Subtype acc. ↑</th><th scope="col">Vendi ↑</th><th scope="col">Cos-to-ref ↓</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Digits-ImageNet</th><td>Raw DINOv3 GMP</td><td>27.70%</td><td>2.65</td><td>0.794</td></tr>
+              <tr class="ours"><th scope="row">Digits-ImageNet</th><td>SAGE Salient GMP</td><td>90.48%</td><td>12.50</td><td>0.116</td></tr>
+              <tr><th scope="row">FFHQ</th><td>Raw DINOv3 GMP</td><td><strong>98.5%</strong></td><td>2.32</td><td>0.779</td></tr>
+              <tr class="ours"><th scope="row">FFHQ</th><td>SAGE Salient GMP</td><td>96.6%</td><td>6.96</td><td>0.470</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">GMP: global max pooling. Vendi measures diversity across 16 samples per reference; cosine similarity to the reference uses DINOv2-L features. On FFHQ, SAGE increases diversity while subtype accuracy is slightly lower than raw DINOv3 conditioning. Full results, including generation FID, are in the paper.</p>
+      </div>
+    </section>
+
+    <section class="section" id="oct">
+      <div class="container">
+        <p class="section-kicker">Beyond natural images</p>
+        <h2>Discovering retinal OCT disease subtypes</h2>
+        <p class="section-intro">Using only normal/disease training labels, SAGE's salient space separates CNV, DME, and DRUSEN.</p>
+        <figure>
+          <a class="figure-link" href="static/images/retinal-oct.webp" target="_blank" rel="noopener noreferrer" aria-label="Open retinal OCT results at full resolution"><img src="static/images/retinal-oct.webp" alt="Retinal OCT examples with common and salient factor edits, alongside clusters for CNV, DME, and DRUSEN in the learned salient space." loading="lazy" decoding="async" width="2400" height="456"></a>
+          <figcaption><strong>Exploratory results on retinal OCT.</strong> The learned salient representation captures disease-related variation. The editing examples are qualitative research results.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section-mist" id="bibtex">
+      <div class="container">
+        <div class="citation-heading"><h2>BibTeX</h2><button class="copy-button" id="copy-bibtex" type="button" hidden>Copy BibTeX</button></div>
+        <pre tabindex="0" aria-label="BibTeX citation"><code id="bibtex-code">@misc{liang2026sage,
+  title={{SAGE}: Salient Factor Discovery and Generation with Visual Foundation Representations},
+  author={Liang, Shuang and Liao, Lejun and Zhang, Shiyuan and Zhang, Max C. and Luo, Xiaolong and Wang, Han and Anzellotti, Stefano and Yuan, Yuan},
+  year={2026},
+  eprint={2609.39635},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2609.39635}
+}</code></pre>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container footer-inner">
+      <p><strong>SAGE</strong> · Preprint 2026</p>
+      <p>Page design inspired by <a href="https://t-s-liang.github.io/SDPose/" target="_blank" rel="noopener noreferrer">SDPose</a> and the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">Academic Project Page</a>.</p>
+      <a class="back-top" href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+</body>
+</html>
